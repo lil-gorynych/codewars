@@ -1,6 +1,22 @@
+import com.sun.source.tree.WhileLoopTree;
+
 import java.util.*;
 
 public class ConnectFour {
+    public static void main(String[] args) {
+        List<String> myList = new ArrayList<String>(Arrays.asList(
+                "A_Red",
+                "B_Yellow",
+                "A_Red",
+                "B_Yellow",
+                "A_Red",
+                "B_Yellow",
+                "G_Red",
+                "B_Yellow"
+        ));
+
+        System.out.println(whoIsWinner(myList));
+    }
     public static String whoIsWinner(List<String> piecesPositionList) {
         int[][] board = new int[9][8];
 
@@ -8,6 +24,9 @@ public class ConnectFour {
             int[] move = getMove(s);
             int row = getRow(move[0], board);
             board[move[0]][row] = move[1];
+
+            printBoard(board);
+            System.out.println();
 
             if (!winner(board, move[0], row).equals("No"))
                 return winner(board, move[0], row);
@@ -17,6 +36,14 @@ public class ConnectFour {
         return "Draw";
     }
 
+    private static void printBoard (int[][] board) {
+        for (int[] i : board) {
+            for (int j : i) {
+                System.out.print(j + " ");
+            }
+            System.out.println();
+        }
+    }
 
     private static int[] getMove (String string) {
         char col = string.charAt(0);
@@ -25,13 +52,13 @@ public class ConnectFour {
         result[1] = (player == 'R') ? 1 : -1;
 
         switch (col) {
-            case 'A' -> result[0] = 1;
-            case 'B' -> result[0] = 2;
-            case 'C' -> result[0] = 3;
-            case 'D' -> result[0] = 4;
-            case 'E' -> result[0] = 5;
-            case 'F' -> result[0] = 6;
-            case 'G' -> result[0] = 7;
+            case 'A': result[0] = 1; break;
+            case 'B': result[0] = 2; break;
+            case 'C': result[0] = 3; break;
+            case 'D': result[0] = 4; break;
+            case 'E': result[0] = 5; break;
+            case 'F': result[0] = 6; break;
+            case 'G': result[0] = 7; break;
         }
 
         return result;
@@ -67,7 +94,7 @@ public class ConnectFour {
             count++; i++;
         }
 
-        return (count > 4);
+        return (count >= 4);
     }
 
     private static boolean checkHorizontal (int[][] board, int col, int row) {
@@ -83,7 +110,7 @@ public class ConnectFour {
             count++; i++;
         }
 
-        return (count > 4);
+        return (count >= 4);
     }
 
     private static boolean checkDiagRight (int[][] board, int col, int row) {
@@ -99,7 +126,7 @@ public class ConnectFour {
             count++; i++;
         }
 
-        return (count > 4);
+        return (count >= 4);
     }
 
     private static boolean checkDiagLeft (int[][] board, int col, int row) {
@@ -115,6 +142,6 @@ public class ConnectFour {
             count++; i++;
         }
 
-        return (count > 4);
+        return (count >= 4);
     }
 }
